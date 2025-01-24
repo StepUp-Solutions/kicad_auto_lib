@@ -125,6 +125,11 @@ class KicadSymFileHandler(FileSystemEventHandler):
             return
         file_path = Path(event.src_path)
         file = os.path.basename(file_path)
+
+        if not os.path.exists(file_path):
+            print(f"File {file} was already processed, skipping")
+            return
+
         # Check if the file has the `.kicad_sym` extension
         if file.endswith(KICAD_SYMBOL_EXT) or file.endswith(KICAD_FOOTPRINT_EXT) or file.endswith(KICAD_3DMODEL_EXT):
             print(f"{file} will be added")

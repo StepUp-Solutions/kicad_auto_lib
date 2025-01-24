@@ -253,7 +253,3 @@ This project uses the following third-party libraries:
 - `sexpdata`: Licensed under the **BSD 2-Clause License**  
   Copyright (c) [2024], [jd-boyd]  
   [Source Code](https://github.com/jd-boyd/sexpdata)  
-
----
-
-Let me know if you’d like to add more sections or refine this further!

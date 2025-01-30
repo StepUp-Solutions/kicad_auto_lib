@@ -371,6 +371,34 @@ def lib_delete_file(file_to_delete: Path) -> Optional[bool]:
                 print("Maximum retries reached. Operation failed.")
                 return False
 
+def contains_kicad_assembly(file_path: Path) -> bool:
+    """
+    Check if the file contains the text 'KiCad electronic assembly' in the first 10 lines.
+
+    Parameters
+    ----------
+    file_path : Path
+        The path to the file to be checked.
+
+    Returns
+    -------
+    bool
+        True if the text is found within the first 10 lines, False otherwise.
+    """
+    try:
+        with open(file_path, 'r') as file:
+            for i, line in enumerate(file):
+                if 'KiCad electronic assembly' in line:
+                    return True
+                if i >= 9:  # Stop after reading the first 10 lines
+                    break
+    except FileNotFoundError:
+        print(f"File not found: {file_path}")
+    except Exception as e:
+        print(f"An error occurred: {e}")
+    
+    return False
+
 def add_to_lib(file_path: Path, file: Path):
     """
     Add a KiCad file (symbol, footprint, or 3D model) to the specified library.
@@ -451,6 +479,9 @@ def add_to_lib(file_path: Path, file: Path):
     elif file.endswith(KICAD_3DMODEL_EXT):
         # Get folder to move to
         folder_to_copy_to = lib_3dmodel_folder_path_build(lib_to_copy_to)
+        if contains_kicad_assembly(file_path):
+            print(f"{file} is a 3D model of a Kicad board, ignored")
+            return
         # Move file
         print(f"Will copy {file} to {folder_to_copy_to}")
         # Move file

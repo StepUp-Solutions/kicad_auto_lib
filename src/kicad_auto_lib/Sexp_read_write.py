@@ -146,7 +146,7 @@ def file_Sexp_save(filepath: str, sexp_file: List) -> Optional[bool]:
             # Attempt to save the file
             with open(file_path, 'w') as file:
                 file.write(sexp.dumps(sexp_file, pretty_print=True))
-            print(f"File successfully saved to {file_path}.")
+            print(f"{file_path} saved.")
             return True
         except Exception as e:
             print(f"Attempt {attempt + 1} failed: {e}")
@@ -398,7 +398,7 @@ def libtable_compare_entries(current_sexp: List, lib_name_list: List[str]) -> Op
 
     # If no 'lib' entries are found, return the full `lib_name_list`
     if not lib_names_in_sexp:
-        print("Warning: No 'lib' entries found in the S-expression.")
+        # print("Warning: No 'lib' entries found in the S-expression.")
         return lib_name_list
 
     # Find names in `lib_name_list` that are missing in the S-expression
@@ -440,12 +440,12 @@ def libtable_check_missing_entries(lib_list: List) -> None:
                 # Generate the new library table entry
         new_symbol_entry = libtable_generate_entry(lib_name, lib_symbol_uri)
         new_footprint_entry = libtable_generate_entry(lib_name, lib_footprint_uri)
-        print(new_symbol_entry)
+        # print(new_symbol_entry)
         # Add the new entry to the library table
         sym_lib_table_sexp = libtable_add_library(sym_lib_table_sexp, new_symbol_entry)
         fp_lib_table_sexp = libtable_add_library(fp_lib_table_sexp, new_footprint_entry)
-        print(sym_lib_table_sexp)
-        print(fp_lib_table_sexp)
+        # print(sym_lib_table_sexp)
+        # print(fp_lib_table_sexp)
 
         # Save the updated library table back to the file
     file_Sexp_save(KICAD_CUSTOM_SYMBOL_FILE, sym_lib_table_sexp)

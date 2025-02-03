@@ -86,7 +86,7 @@ from . import Sexp_read_write as sexp_util
 from . import git_manage as git
 
 
-def projectfolder_lib_table_check_and_create():
+def projectfolder_lib_table_check_and_create() -> None:
     """
     Checks for the existence of KiCad project specific symbol and footprint files in the specified folder.
     If the files are missing, they are created with default content.
@@ -458,6 +458,7 @@ def add_to_lib(file_path: Path, file: Path):
         sexp_util.file_Sexp_save(lib_symbol_folder_path_build(lib_to_copy_to), merged_sexp)
         # Remove old file
         lib_delete_file(file_path)
+        
 
 
 
@@ -492,7 +493,7 @@ def add_to_lib(file_path: Path, file: Path):
 
     # Once successful, commit and push on git.
 
-    
+    print(f"{file} added to lib")
     if git.git_check_if_repo(lib_folder_path_build(lib_to_copy_to)):
         print("Pushing to repo")
         commit_mess = f"{file} added"
@@ -524,7 +525,7 @@ def projectfolder_search_for_symbols_and_footprints(directory: str):
                 file_path = Path(os.path.join(root, file))
                 # print(file_path)
                 add_to_lib(file_path, file)
-                print(f"{file} added")
+                
                 
 
             # if file.endswith(KICAD_SYMBOL_EXT):

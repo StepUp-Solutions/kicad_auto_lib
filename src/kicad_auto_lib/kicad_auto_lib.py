@@ -28,7 +28,7 @@ Notes
 from .constants import PROJECT_ROOT_PATH
 from .variables import lib_list_read, lib_list_write
 from .file_monitor import monitor_directory
-from .file_manage import projectfolder_search_for_symbols_and_footprints, libfolder_check_and_init
+from .file_manage import projectfolder_search_for_symbols_and_footprints, libfolder_check_and_init, projectfolder_lib_table_check_and_create
 from .Sexp_read_write import libtable_check_missing_entries
 
 
@@ -47,8 +47,13 @@ def main():
     Maintained by chgayot @ StepUp Solutions
     """)
 
+    # Checking if project's custom lib files present
+    projectfolder_lib_table_check_and_create()
+    # Checking current lib folders
     all_libs = libfolder_check_and_init()
+    # Updating global lib list file
     lib_list_write(all_libs)
+    # Updating project's custom lib files
     libtable_check_missing_entries(lib_list_read())
 
     print("Launching initial scan")
@@ -62,6 +67,7 @@ def main():
 
     # Call the function to monitor the directory
     monitor_directory(PROJECT_ROOT_PATH)
+
 
 if __name__ == "__main__":
     main()
